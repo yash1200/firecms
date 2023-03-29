@@ -95,7 +95,7 @@ export function useFirestoreDataSource({
         };
     }, []);
 
-    const buildQuery = useCallback(<M>(path: string, filter: FilterValues<Extract<keyof M, string>> | undefined, orderBy: string | undefined, order: "desc" | "asc" | undefined, startAfter: any[] | undefined, limit: number | undefined, group: boolean | undefined) => {
+    const buildQuery = useCallback(<M>(path: string, filter: FilterValues<Extract<keyof M, string>> | undefined, orderBy: string | undefined, order: "desc" | "asc" | undefined, startAfter: any[] | undefined, limit: number | undefined, group?: boolean) => {
 
         if (!firebaseApp) throw Error("useFirestoreDataSource Firebase not initialised");
 
