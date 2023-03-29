@@ -6,9 +6,9 @@ import {
     FireCMSContext,
     User
 } from "../../types";
-import { useDataSource } from "./useDataSource";
-import { useNavigationContext } from "../useNavigationContext";
 import { useFireCMSContext } from "../useFireCMSContext";
+import { useNavigationContext } from "../useNavigationContext";
+import { useDataSource } from "./useDataSource";
 
 /**
  * @category Hooks and utilities
@@ -135,7 +135,8 @@ export function useCollectionFetch<M extends Record<string, any>, UserType exten
                 limit: itemCount,
                 startAfter: undefined,
                 orderBy: sortByProperty,
-                order: currentSort
+                order: currentSort,
+                group: collection.collectionGroup
             });
         } else {
             dataSource.fetchCollection<M>({
@@ -146,7 +147,8 @@ export function useCollectionFetch<M extends Record<string, any>, UserType exten
                 limit: itemCount,
                 startAfter: undefined,
                 orderBy: sortByProperty,
-                order: currentSort
+                order: currentSort,
+                group: collection.collectionGroup
             })
                 .then(onEntitiesUpdate)
                 .catch(onError);

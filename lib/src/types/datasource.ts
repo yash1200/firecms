@@ -1,5 +1,5 @@
+import { EntityCollection, FilterValues } from "./collections";
 import { Entity, EntityStatus, EntityValues } from "./entities";
-import { EntityCollection, FilterValues, WhereFilterOp } from "./collections";
 import {
     ResolvedEntityCollection,
     ResolvedProperty
@@ -36,6 +36,7 @@ export interface FetchCollectionProps<M extends Record<string, any> = any> {
     orderBy?: string;
     searchString?: string;
     order?: "desc" | "asc";
+    group?: boolean;
 }
 
 /**

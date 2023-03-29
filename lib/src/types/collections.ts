@@ -1,10 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Entity, EntityValues } from "./entities";
-import { User } from "./user";
-import { FireCMSContext } from "./firecms_context";
 import { EntityCallbacks } from "./entity_callbacks";
+import { FireCMSContext } from "./firecms_context";
 import { Permissions, PermissionsBuilder } from "./permissions";
 import { EnumValues, PropertiesOrBuilders } from "./properties";
+import { User } from "./user";
 
 /**
  * This interface represents a view that includes a collection of entities.
@@ -40,6 +40,8 @@ export interface EntityCollection<M extends Record<string, any> = any,
      * This path also determines the URL in FireCMS, unless an alias is specified
      */
     path: string;
+
+    collectionGroup?: boolean;
 
     /**
      * You can set an alias that will be used internally instead of the `path`.

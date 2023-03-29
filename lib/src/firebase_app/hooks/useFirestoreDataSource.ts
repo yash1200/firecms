@@ -1,30 +1,7 @@
-import {
-    DataSource,
-    DeleteEntityProps,
-    Entity,
-    EntityCollection,
-    EntityReference,
-    EntityValues,
-    FetchCollectionProps,
-    FetchEntityProps,
-    FieldConfig,
-    FilterValues,
-    GeoPoint,
-    ListenCollectionProps,
-    ListenEntityProps,
-    ResolvedEntityCollection,
-    ResolvedProperties,
-    ResolvedProperty,
-    SaveEntityProps,
-    WhereFilterOp
-} from "../../types";
-import {
-    resolveCollection,
-    sanitizeData,
-    updateDateAutoValues
-} from "../../core";
+import { FirebaseApp } from "firebase/app";
 import {
     collection as collectionClause,
+    collectionGroup,
     CollectionReference,
     deleteDoc,
     doc,
@@ -48,9 +25,33 @@ import {
     Timestamp,
     where as whereClause
 } from "firebase/firestore";
-import { FirebaseApp } from "firebase/app";
-import { FirestoreTextSearchController } from "../types/text_search";
 import { useCallback } from "react";
+import {
+    resolveCollection,
+    sanitizeData,
+    updateDateAutoValues
+} from "../../core";
+import {
+    DataSource,
+    DeleteEntityProps,
+    Entity,
+    EntityCollection,
+    EntityReference,
+    EntityValues,
+    FetchCollectionProps,
+    FetchEntityProps,
+    FieldConfig,
+    FilterValues,
+    GeoPoint,
+    ListenCollectionProps,
+    ListenEntityProps,
+    ResolvedEntityCollection,
+    ResolvedProperties,
+    ResolvedProperty,
+    SaveEntityProps,
+    WhereFilterOp
+} from "../../types";
+import { FirestoreTextSearchController } from "../types/text_search";
 import { setDateToMidnight } from "../util/dates";
 
 /**
@@ -94,12 +95,14 @@ export function useFirestoreDataSource({
         };
     }, []);
 
-    const buildQuery = useCallback(<M>(path: string, filter: FilterValues<Extract<keyof M, string>> | undefined, orderBy: string | undefined, order: "desc" | "asc" | undefined, startAfter: any[] | undefined, limit: number | undefined) => {
+    const buildQuery = useCallback(<M>(path: string, filter: FilterValues<Extract<keyof M, string>> | undefined, orderBy: string | undefined, order: "desc" | "asc" | undefined, startAfter: any[] | undefined, limit: number | undefined, group: boolean | undefined) => {
 
         if (!firebaseApp) throw Error("useFirestoreDataSource Firebase not initialised");
 
         const firestore = getFirestore(firebaseApp);
-        const collectionReference: Query = collectionClause(firestore, path);
+        const collectionReference: Query = group
+                ? collectionGroup(firestore, path)
+                : collectionClause(firestore, path);
 
         const queryParams: QueryConstraint[] = [];
         if (filter) {

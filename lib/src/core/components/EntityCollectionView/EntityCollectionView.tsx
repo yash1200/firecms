@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Popover, Typography, useTheme } from "@mui/material";
-import equal from "react-fast-compare"
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import equal from "react-fast-compare";
 
 import {
     CollectionSize,
@@ -16,20 +16,12 @@ import {
 } from "../EntityCollectionTable";
 
 import {
-    EntityCollectionRowActions
-} from "../EntityCollectionTable/internal/EntityCollectionRowActions";
-import {
     DeleteEntityDialog
 } from "../EntityCollectionTable/internal/DeleteEntityDialog";
-
 import {
-    canCreateEntity,
-    canDeleteEntity,
-    canEditEntity,
-    fullPathToCollectionSegments,
-    mergeDeep
-} from "../../util";
-import { Markdown, renderSkeletonText } from "../../../preview";
+    EntityCollectionRowActions
+} from "../EntityCollectionTable/internal/EntityCollectionRowActions";
+
 import {
     useAuthController,
     useDataSource,
@@ -40,10 +32,18 @@ import {
 import {
     useUserConfigurationPersistence
 } from "../../../hooks/useUserConfigurationPersistence";
-import { EntityCollectionViewActions } from "./EntityCollectionViewActions";
+import { Markdown, renderSkeletonText } from "../../../preview";
+import {
+    canCreateEntity,
+    canDeleteEntity,
+    canEditEntity,
+    fullPathToCollectionSegments,
+    mergeDeep
+} from "../../util";
 import {
     useTableController
 } from "../EntityCollectionTable/useTableController";
+import { EntityCollectionViewActions } from "./EntityCollectionViewActions";
 import {
     isFilterCombinationValidForFirestore
 } from "./isFilterCombinationValidForFirestore";
@@ -323,7 +323,9 @@ export const EntityCollectionView = React.memo(
             });
             sideEntityController.open({
                 entityId: clickedEntity.id,
-                path: fullPath,
+                path: collection.collectionGroup
+                    ? clickedEntity.path
+                    : fullPath,
                 collection,
                 updateUrl: true,
                 onClose: unselectNavigatedEntity

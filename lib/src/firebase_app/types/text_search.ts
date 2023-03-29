@@ -32,3 +32,30 @@ export function performAlgoliaTextSearch(index: SearchIndex, query: string): Pro
             return [];
         });
 }
+
+/**
+ * Utility function to perform a text search in an typesense index,
+ * returning the ids of the entities.
+ * @param index
+ * @param query
+ * @category Firebase
+ */
+export function performTypesenseSearch(
+    index: any,
+    query: string,
+    queryBy: string
+): Promise<readonly string[]> {
+    return index
+        .documents()
+        .search({
+            q: query,
+            query_by: queryBy
+        })
+        .then(({ hits }: any) => {
+            return hits.map((hit: any) => hit.document.id as string);
+        })
+        .catch((err: any) => {
+            console.log(err);
+            return [];
+        });
+}
