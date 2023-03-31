@@ -421,7 +421,11 @@ export type EntityCustomView<M extends Record<string, any> = any> =
     {
         path: string,
         name: string,
-        builder: (params: EntityCustomViewParams<M>) => React.ReactNode
+        /**
+         * DEPRECATED: Use `Builder` instead
+         */
+        builder?: React.ComponentType<EntityCustomViewParams<M>>;
+        Builder?: React.ComponentType<EntityCustomViewParams<M>>;
     }
 
 /**

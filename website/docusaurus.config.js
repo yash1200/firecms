@@ -143,7 +143,10 @@ module.exports = {
                         {
                             to: "enterprise",
                             label: "Enterprise",
-                            position: "left"
+                        },
+                        {
+                            to: "https://app.firecms.co/subscriptions",
+                            label: "Subscriptions",
                         },
                         {
                             label: "Demo",
